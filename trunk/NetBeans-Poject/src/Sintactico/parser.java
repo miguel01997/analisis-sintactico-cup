@@ -291,7 +291,7 @@ public class parser extends java_cup.runtime.lr_parser {
   public java_cup.runtime.Symbol scan()
     throws java.lang.Exception
     {
-return Scanner.nextToken(); 
+return scanner.nextToken();
     }
 
 

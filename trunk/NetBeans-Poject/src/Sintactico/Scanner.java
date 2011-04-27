@@ -865,14 +865,12 @@ class Scanner implements java_cup.runtime.Scanner {
     }
   }
 
-  public Symbol next_token()
-    {
-      Symbol s = null;
+public Symbol next_token()
+{
+    Symbol s = null;
+    
 
-      token t;
-      t = nextToken();
-      
-      return s;
-  }
 
+    return s;
+}
 }
