@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -27,6 +28,11 @@ public class AST_Factor_Name_Expression_Simple extends AST_Factor_Name_Expressio
     public AST_Factor_Name_Expression_Simple(Object name, AST_Expression N_Expression) {
         this.name = name;
         this.N_Expression = N_Expression;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Factor_Name_Expression_Simple(this);
     }
 
     

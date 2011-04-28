@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -15,6 +16,8 @@ public abstract class AST_Condition {
 
     public AST_Condition() {
     }
+
+    public abstract Object visit(visitor v);
 
 
 

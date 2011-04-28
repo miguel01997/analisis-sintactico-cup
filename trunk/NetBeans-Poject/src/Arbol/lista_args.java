@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -35,6 +36,10 @@ public class lista_args{
     public lista_args(Object arg, lista_args sig) {
         this.arg = arg;
         this.sig = sig;
+    }
+
+    public Object visit(visitor v){
+        return v.visit_lista_args(this);
     }
 
         

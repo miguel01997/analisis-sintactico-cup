@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -26,6 +27,11 @@ public class AST_Term_Body_Simple extends AST_Term_Body{
     public AST_Term_Body_Simple(Object multiOdivi, AST_Factor N_Factor) {
         this.multiOdivi = multiOdivi;
         this.N_Factor = N_Factor;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Term_Body_Simple(this);
     }
 
     

@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -21,6 +22,11 @@ public class AST_Statement_Begin_Lista extends AST_Statement_Begin{
     public AST_Statement_Begin_Lista(AST_Statement N_Statement, AST_Statement_Begin N_Sig) {
         this.N_Statement = N_Statement;
         this.N_Sig = N_Sig;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Statement_Begin_Lista(this);
     }
 
 

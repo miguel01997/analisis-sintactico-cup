@@ -4,7 +4,7 @@
  */
 
 package Arbol;
-
+import Visitor.*;
 /**
  *
  * @author lidier
@@ -23,6 +23,11 @@ public class AST_Variable_Simple extends AST_Variable {
 
     public AST_Variable_Simple(Object name) {
         this.name = name;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Variable_Simple(this);
     }
 
     

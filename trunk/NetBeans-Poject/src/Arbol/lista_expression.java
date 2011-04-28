@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -26,7 +27,9 @@ package Arbol;
             this.sig = sig;
         }
 
-
+public Object visit(visitor v){
+        return v.visit_lista_expression(this);
+    }
 
 
 

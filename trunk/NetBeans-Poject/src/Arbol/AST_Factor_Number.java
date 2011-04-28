@@ -4,7 +4,7 @@
  */
 
 package Arbol;
-
+import Visitor.*;
 /**
  *
  * @author lidier
@@ -23,6 +23,11 @@ public class AST_Factor_Number extends AST_Factor {
 
     public AST_Factor_Number(Object number) {
         this.number = number;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Factor_Number(this);
     }
 
     

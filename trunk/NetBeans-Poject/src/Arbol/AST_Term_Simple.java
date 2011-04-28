@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -18,6 +19,11 @@ public class AST_Term_Simple extends AST_Term{
 
     public AST_Term_Simple(AST_Factor N_Factor) {
         this.N_Factor = N_Factor;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Term_Simple(this);
     }
 
 

@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -29,6 +30,11 @@ public class AST_Expression_Csig_Compuesta extends AST_Expression {
         this.signo = signo;
         this.N_Term = N_Term;
         this.N_Expression_Term = N_Expression_Term;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Expression_Csig_Compuesta(this);
     }
 
     

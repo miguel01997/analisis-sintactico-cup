@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -18,6 +19,11 @@ public class AST_Program extends AST_AST{
 
     public AST_Program(AST_Block N_Block) {
         this.N_Block = N_Block;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Program(this);
     }
 
 

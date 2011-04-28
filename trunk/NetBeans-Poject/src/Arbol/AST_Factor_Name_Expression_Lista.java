@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -29,6 +30,11 @@ public class AST_Factor_Name_Expression_Lista extends AST_Factor_Name_Expression
     public AST_Factor_Name_Expression_Lista(Object name, lista_expression lista) {
         this.name = name;
         this.lista = lista;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Factor_Name_Expression_Lista(this);
     }
 
     

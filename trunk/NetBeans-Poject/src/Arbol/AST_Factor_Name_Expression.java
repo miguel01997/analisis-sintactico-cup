@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -15,6 +16,8 @@ public abstract class AST_Factor_Name_Expression extends AST_Factor_Name{
 
     public AST_Factor_Name_Expression() {
     }
+
+    public abstract Object visit(visitor v);
 
     
 }
