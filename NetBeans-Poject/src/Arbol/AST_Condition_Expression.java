@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -23,6 +24,11 @@ public class AST_Condition_Expression extends AST_Condition{
         this.Exp1 = Exp1;
         this.Op = Op;
         this.Exp2 = Exp2;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Condition_Expression(this);
     }
 
     

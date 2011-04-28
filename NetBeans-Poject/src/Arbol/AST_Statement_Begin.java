@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -13,6 +14,8 @@ public abstract class AST_Statement_Begin extends AST_Statement{
 
     public AST_Statement_Begin() {
     }
+
+    public abstract Object visit(visitor v);
 
     
 

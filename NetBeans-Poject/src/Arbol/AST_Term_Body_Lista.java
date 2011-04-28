@@ -4,7 +4,7 @@
  */
 
 package Arbol;
-
+import Visitor.*;
 /**
  *
  * @author lidier
@@ -31,6 +31,11 @@ public class AST_Term_Body_Lista extends AST_Term_Body{
         this.multiOdivi = multiOdivi;
         this.N_Factor = N_Factor;
         this.N_Sig = N_Sig;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Term_Body_Lista(this);
     }
 
     

@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -18,6 +19,11 @@ public class AST_Statement_Write extends AST_Statement {
 
     public AST_Statement_Write(AST_Expression N_Expression) {
         this.N_Expression = N_Expression;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Statement_Write(this);
     }
 
 

@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -26,6 +27,11 @@ public class AST_Function_N extends AST_Function{
     public AST_Function_N(Object name, AST_Block N_Block) {
         this.name = name;
         this.N_Block = N_Block;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Function_N(this);
     }
 
     

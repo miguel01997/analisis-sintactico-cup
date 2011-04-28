@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -22,6 +23,11 @@ public class AST_Declaration_Lista extends AST_Declaration{
     public AST_Declaration_Lista(AST_Declaration N_Declaration, AST_Declaration N_Sig) {
         this.N_Declaration = N_Declaration;
         this.N_Sig = N_Sig;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Declaration_Lista(this);
     }
 
   

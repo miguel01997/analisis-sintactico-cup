@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -23,6 +24,11 @@ public class AST_Factor_Name_Simple extends AST_Factor_Name{
 
     public AST_Factor_Name_Simple(Object name) {
         this.name = name;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Factor_Name_Simple(this);
     }
 
     

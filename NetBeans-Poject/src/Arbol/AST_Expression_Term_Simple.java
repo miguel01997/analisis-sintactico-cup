@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -26,6 +27,11 @@ public class AST_Expression_Term_Simple extends AST_Expression_Term{
     public AST_Expression_Term_Simple(Object signo, AST_Term N_Term) {
         this.signo = signo;
         this.N_Term = N_Term;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Expression_Term_Simple(this);
     }
 
 

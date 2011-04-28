@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -20,6 +21,11 @@ public class AST_Statement_While extends AST_Statement {
     public AST_Statement_While(AST_Condition N_Condition, AST_Statement N_Statement) {
         this.N_Condition = N_Condition;
         this.N_Statement = N_Statement;
+    }
+
+    @Override
+    public Object visit(visitor v){
+        return v.visit_AST_Statement_While(this);
     }
 
 

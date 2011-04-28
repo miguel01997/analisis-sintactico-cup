@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -14,5 +15,6 @@ public abstract class AST_Expression {
     public AST_Expression() {
     }
 
+    public abstract Object visit(visitor v);
     
 }

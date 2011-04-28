@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -13,6 +14,8 @@ public abstract class AST_Block {
 
     public AST_Block() {
     }
+
+    public abstract Object visit(visitor v);
 
 
 }

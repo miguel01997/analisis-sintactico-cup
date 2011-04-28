@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -28,6 +29,11 @@ public class AST_Constant_Def {
     public AST_Constant_Def(Object name, Object number) {
         this.name = name;
         this.number = number;
+    }
+
+    
+    public Object visit(visitor v){
+        return v.visit_AST_Constant_Def(this);
     }
 
     

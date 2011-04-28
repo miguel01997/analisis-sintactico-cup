@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -13,6 +14,8 @@ public abstract class AST_Constant extends AST_Declaration_Simple{
 
     public AST_Constant() {
     }
+
+    public abstract Object visit(visitor v);
 
 
 }

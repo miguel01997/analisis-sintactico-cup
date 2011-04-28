@@ -4,6 +4,7 @@
  */
 
 package Arbol;
+import Visitor.*;
 
 /**
  *
@@ -13,6 +14,8 @@ public abstract class AST_Variable extends AST_Declaration_Simple{
 
     public AST_Variable() {
     }
+
+    public abstract Object visit(visitor v);
 
 
 }
