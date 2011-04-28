@@ -10,6 +10,8 @@ package Editor;
  * @author lidier
  */
 import java.awt.Event;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
@@ -19,18 +21,26 @@ import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 
 
-public class AccionAnalizar extends AbstractAction
+public class AccionCompilar extends AbstractAction
 {
     private JTextComponent areaTexto;
 
     public void actionPerformed (ActionEvent e)
    {
-           String texto = areaTexto.getText();
+        try {
+        String texto = areaTexto.getText();
       InputStream stream = new ByteArrayInputStream(texto.getBytes());
-      Sintactico.Parser.Parser.main(stream);
+      Sintactico.Scanner sca = new Sintactico.Scanner(stream);
+      Sintactico.parser par = new Sintactico.parser(sca);
+
+            par.parse();
+        }
+        catch (Exception ex) {
+            Logger.getLogger(AccionCompilar.class.getName()).log(Level.SEVERE, null, ex);
+        }
    }
 
-    public AccionAnalizar(JTextComponent areaTexto)
+    public AccionCompilar(JTextComponent areaTexto)
     {
         this.areaTexto = areaTexto;
         this.putValue(Action.NAME, "COMPILAR");

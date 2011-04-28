@@ -9,10 +9,11 @@ package Arbol;
  *
  * @author lidier
  */
-public abstract class AST_Block {
+public abstract class AST_Term_Body {
 
-    public AST_Block() {
+    public AST_Term_Body() {
     }
+
 
 
 }

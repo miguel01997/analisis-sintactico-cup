@@ -11,7 +11,8 @@ package Arbol;
  */
 public class AST_Factor_Number extends AST_Factor {
 
-    public int number;
+    //public int number;
+    public Object number;
 
     public AST_Factor_Number() {
     }
@@ -19,6 +20,12 @@ public class AST_Factor_Number extends AST_Factor {
     public AST_Factor_Number(int number) {
         this.number = number;
     }
+
+    public AST_Factor_Number(Object number) {
+        this.number = number;
+    }
+
+    
 
 
 

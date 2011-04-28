@@ -11,16 +11,27 @@ package Arbol;
  */
 public class AST_Expression_Term_Simple extends AST_Expression_Term{
 
+    //public int signo;
+    public Object signo;
     public AST_Term N_Term;
 
     public AST_Expression_Term_Simple() {
     }
 
-    public AST_Expression_Term_Simple(AST_Term N_Term) {
+    public AST_Expression_Term_Simple(int signo, AST_Term N_Term) {
+        this.signo = signo;
+        this.N_Term = N_Term;
+    }
+
+    public AST_Expression_Term_Simple(Object signo, AST_Term N_Term) {
+        this.signo = signo;
         this.N_Term = N_Term;
     }
 
 
+
+
+    
 
 
 }

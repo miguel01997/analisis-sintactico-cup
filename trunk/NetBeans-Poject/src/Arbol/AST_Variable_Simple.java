@@ -11,7 +11,8 @@ package Arbol;
  */
 public class AST_Variable_Simple extends AST_Variable {
 
-    public String name;
+    //public String name;
+    public Object name;
 
     public AST_Variable_Simple() {
     }
@@ -19,6 +20,12 @@ public class AST_Variable_Simple extends AST_Variable {
     public AST_Variable_Simple(String name) {
         this.name = name;
     }
+
+    public AST_Variable_Simple(Object name) {
+        this.name = name;
+    }
+
+    
 
     
 

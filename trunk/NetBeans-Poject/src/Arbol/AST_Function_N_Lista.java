@@ -12,30 +12,12 @@ package Arbol;
 public class AST_Function_N_Lista extends AST_Function{
 
 
-    public String name;
-    public lista_args args = null;
+    //public String name;
+    public Object name;
+    public lista_args args;
     public AST_Block N_Block;
 
-    public class lista_args{
-
-        public String arg;
-        public lista_args sig;
-
-        public lista_args() {
-        }
-
-        public lista_args(String arg) {
-            this.arg = arg;
-        }
-
-        public lista_args(String arg, lista_args sig) {
-            this.arg = arg;
-            this.sig = sig;
-        }
-
-
-
-    }
+    
 
     public AST_Function_N_Lista() {
     }
@@ -44,6 +26,23 @@ public class AST_Function_N_Lista extends AST_Function{
         this.name = name;
         this.N_Block = N_Block;
     }
+
+    public AST_Function_N_Lista(Object name, AST_Block N_Block) {
+        this.name = name;
+        this.N_Block = N_Block;
+    }
+
+    public AST_Function_N_Lista(Object name, lista_args args, AST_Block N_Block) {
+        this.name = name;
+        this.args = args;
+        this.N_Block = N_Block;
+    }
+    
+    
+
+
+
+    
 
 
 

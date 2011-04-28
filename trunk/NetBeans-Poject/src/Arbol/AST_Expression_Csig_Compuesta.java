@@ -11,7 +11,8 @@ package Arbol;
  */
 public class AST_Expression_Csig_Compuesta extends AST_Expression {
 
-    public int signo;
+    //public int signo;
+    public Object signo;
     public AST_Term N_Term;
     public AST_Expression_Term N_Expression_Term;
 
@@ -23,6 +24,14 @@ public class AST_Expression_Csig_Compuesta extends AST_Expression {
         this.N_Term = N_Term;
         this.N_Expression_Term = N_Expression_Term;
     }
+
+    public AST_Expression_Csig_Compuesta(Object signo, AST_Term N_Term, AST_Expression_Term N_Expression_Term) {
+        this.signo = signo;
+        this.N_Term = N_Term;
+        this.N_Expression_Term = N_Expression_Term;
+    }
+
+    
 
 
 

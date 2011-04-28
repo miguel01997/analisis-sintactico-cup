@@ -12,7 +12,8 @@ package Arbol;
 public class AST_Statement_Name extends AST_Statement {
 
 
-    public String name;
+    //public String name;
+    public Object name;
 
     public AST_Expression N_Expression;
 
@@ -23,6 +24,13 @@ public class AST_Statement_Name extends AST_Statement {
         this.name = name;
         this.N_Expression = N_Expression;
     }
+
+    public AST_Statement_Name(Object name, AST_Expression N_Expression) {
+        this.name = name;
+        this.N_Expression = N_Expression;
+    }
+
+    
 
 
 

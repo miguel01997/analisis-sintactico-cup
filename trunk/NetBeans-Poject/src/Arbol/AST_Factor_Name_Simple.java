@@ -11,7 +11,8 @@ package Arbol;
  */
 public class AST_Factor_Name_Simple extends AST_Factor_Name{
 
-    public String name;
+    //public String name;
+    public Object name;
 
     public AST_Factor_Name_Simple() {
     }
@@ -19,6 +20,12 @@ public class AST_Factor_Name_Simple extends AST_Factor_Name{
     public AST_Factor_Name_Simple(String name) {
         this.name = name;
     }
+
+    public AST_Factor_Name_Simple(Object name) {
+        this.name = name;
+    }
+
+    
 
 
 
