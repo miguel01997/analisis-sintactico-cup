@@ -1,5 +1,7 @@
-package sintactico_cup;
+package Sintactico;
+
 import java_cup.runtime.*;
+import Arbol.*;
 
 parser code {:
 	
@@ -28,7 +30,7 @@ parser code {:
 :}
 
 init with {:               :};
-scan with {:return Scanner.nextToken(); :}
+scan with {:return scanner.next_token(); :}
 
 
 //Simbolos Terminales
@@ -54,16 +56,17 @@ non terminal AST_Factor Cup_Factor;
 non terminal AST_Statement Cup_Statement;
 non terminal AST_Condition Cup_Condition;
 
-non terminal AST_Lista_Declaration Ext_Lista_Declaration;
-non terminal AST_Lista_Constant_Def Ext_Lista_Constant_Def;
-non terminal AST_Lista_Sym_Name Ext_Lista_Sym_Name;
-non terminal AST_Sym_Masomenos Ext_Sym_Masomenos;
-non terminal AST_Lista_Masomenos Ext_Lista_Masomenos;
-non terminal AST_Sym_Multidivi Ext_Sym_Multidivi;
-non terminal AST_Lista_Multidivi Ext_Lista_Multidivi;
-non terminal AST_Lista_Expression Ext_Lista_Expression;
-non terminal AST_Sym_Op Ext_Sym_Op;
-non terminal AST_Lista_Statement Ext_Lista_Statement;
+non terminal AST_Declaration Ext_Lista_Declaration;
+non terminal AST_Constant Ext_Lista_Constant_Def;
+non terminal AST_Variable Ext_Lista_Sym_Name;
+non terminal lista_args Ext_Lista_Sym_Name_F;
+non terminal AST_Expression_Term Ext_Lista_Masomenos;
+non terminal AST_Term_Body Ext_Lista_Multidivi;
+non terminal lista_expression Ext_Lista_Expression;
+non terminal AST_Statement_Begin Ext_Lista_Statement;
+
+
+non terminal Ext_Sym_Op, Ext_Sym_Masomenos, Ext_Sym_Multidivi;
 
 
 start with Cup_Program;
@@ -75,35 +78,35 @@ Cup_Program ::= Cup_Block:b Sym_Punto
 
 // Regla 2)
 Cup_Block ::= Cup_Statement:s 
-		{:RESULT = new  AST_Block(s); :};
+		{:RESULT = new  AST_Block_S(s); :};
 Cup_Block ::= Ext_Lista_Declaration:ld Cup_Statement:s 
-		{:RESULT = new  AST_Block(ld,s); :};
+		{:RESULT = new  AST_Block_DS(s,ld); :};
 Ext_Lista_Declaration ::= Cup_Declaration:d 
-		{:RESULT = new  AST_Lista_Declaration(d); :};
+		{:RESULT = d; :};
 Ext_Lista_Declaration ::= Cup_Declaration:d Ext_Lista_Declaration:l 
-		{:RESULT = new  AST_Lista_Declaration(d,l); :} ;
+		{:RESULT = new  AST_Declaration_Lista(d,l); :} ;
 
 
 // Regla 3)
 Cup_Declaration ::= Cup_Constant:c 
-		{:RESULT = new  AST_Declaration(c); :};
+		{:RESULT = c; :};
 Cup_Declaration ::= Cup_Variable:v 
-		{:RESULT = new  AST_Declaration(v); :};
+		{:RESULT = v; :};
 Cup_Declaration ::= Cup_Function:f 
-		{:RESULT = new  AST_Declaration(f); :};
+		{:RESULT = f; :};
 
 
 
 // Regla 4)
 Cup_Constant ::= Sym_Const Cup_Constant_Def:cd Sym_PuntoYComa 
-		{:RESULT = new  AST_Constant(cd); :};
+		{:RESULT = new  AST_Constant_Simple(cd); :};
 Cup_Constant ::= Sym_Const Cup_Constant_Def:cd Ext_Lista_Constant_Def:l Sym_PuntoYComa 
-		{:RESULT = new  AST_Constant(cd,l); :};
+		{:RESULT = new  AST_Constant_Lista(cd,l); :};
 
 Ext_Lista_Constant_Def ::= Sym_Coma Cup_Constant_Def:cd 
-		{:RESULT = new  AST_Lista_Constant_Def(cd); :};
+		{:RESULT = new  AST_Constant_Simple(cd); :};
 Ext_Lista_Constant_Def ::= Sym_Coma Cup_Constant_Def:cd Ext_Lista_Constant_Def:l
-		{:RESULT = new  AST_Lista_Constant_Def(cd,l); :};
+		{:RESULT = new  AST_Constant_Lista(cd,l); :};
 	
 //Regla 5)
 Cup_Constant_Def ::= Sym_Name:nam Sym_Igual Sym_Number:num 
@@ -111,115 +114,121 @@ Cup_Constant_Def ::= Sym_Name:nam Sym_Igual Sym_Number:num
 
 // Regla 6)
 Cup_Variable ::= Sym_Var Sym_Name:nam Sym_PuntoYComa 
-		{:RESULT = new  AST_Variable(nam); :};
+		{:RESULT = new  AST_Variable_Simple(nam); :};
 Cup_Variable ::= Sym_Var Sym_Name:nam Ext_Lista_Sym_Name:ln Sym_PuntoYComa 
-		{:RESULT = new  AST_Variable(nam,ln); :};
+		{:RESULT = new  AST_Variable_Lista(new AST_Variable_Simple(nam),ln); :};
 
 Ext_Lista_Sym_Name ::= Sym_Coma Sym_Name:n 
-		{:RESULT = new  AST_Lista_Sym_Name(n); :};
+		{:RESULT = new  AST_Variable_Simple(n); :};
 Ext_Lista_Sym_Name ::= Sym_Coma Sym_Name:n Ext_Lista_Sym_Name:l 
-		{:RESULT = new  AST_Lista_Sym_Name(n,l); :};
+		{:RESULT = new  AST_Variable_Lista(new AST_Variable_Simple(n),l); :};
 
 
 // Regla 7)
 Cup_Function ::= Sym_Function Sym_Name:n Sym_ParenI Sym_ParenF Cup_Block:b Sym_PuntoYComa 
-		{:RESULT = new  AST_Function(n,b); :};
+		{:RESULT = new  AST_Function_N(n,b); :};
 Cup_Function ::= Sym_Function Sym_Name:n Sym_ParenI Sym_Name:par_nam Sym_ParenF Cup_Block:b Sym_PuntoYComa 
-		{:RESULT = new  AST_Function(n,par_n,b); :};
-Cup_Function ::= Sym_Function Sym_Name:n Sym_ParenI Sym_Name:par_n Ext_Lista_Sym_Name:ln Sym_ParenF Cup_Block:b Sym_PuntoYComa 
-		{:RESULT = new  AST_Function(n,par_n,l,b); :};
+		{:RESULT = new  AST_Function_N_Simple(n,par_nam,b); :};
+Cup_Function ::= Sym_Function Sym_Name:n Sym_ParenI Sym_Name:par_n Ext_Lista_Sym_Name_F:ln Sym_ParenF Cup_Block:b Sym_PuntoYComa 
+		{:RESULT = new  AST_Function_N_Lista(n,new lista_args(par_n, ln),b); :};
+
+Ext_Lista_Sym_Name_F ::= Sym_Coma Sym_Name:n 
+		{:RESULT = new  lista_args(n); :};
+Ext_Lista_Sym_Name_F ::= Sym_Coma Sym_Name:n Ext_Lista_Sym_Name_F:l 
+		{:RESULT = new  lista_args(n,l); :};
 
 // Regla 8)
 Cup_Expression ::= Cup_Term:t 
-		{: RESULT = new  AST_Expression(t) ; :};
+		{: RESULT = new  AST_Expression_Ssig_Simple(t) ; :};
 Cup_Expression ::= Cup_Term:t Ext_Lista_Masomenos:lm
-		{: RESULT = new  AST_Expression(t,lm) ; :};
+		{: RESULT = new  AST_Expression_Ssig_Compuesta(t,lm) ; :};
 Cup_Expression ::= Ext_Sym_Masomenos:m Cup_Term:t
-		{: RESULT = new  AST_Expression(m,t) ; :};
+		{: RESULT = new  AST_Expression_Csig_Simple(m,t) ; :};
 Cup_Expression ::= Ext_Sym_Masomenos:m Cup_Term:t Ext_Lista_Masomenos:lm
-		{: RESULT = new  AST_Expression(m,t,lm) ; :};
+		{: RESULT = new  AST_Expression_Csig_Compuesta(m,t,lm) ; :};
 
 Ext_Sym_Masomenos ::= Sym_Mas:m
-		{: RESULT = new  AST_Sym_Masomenos(m) ; :};
+		{: RESULT = m; :};
 
 Ext_Sym_Masomenos ::= Sym_Menos:m
-		{: RESULT = new  AST_Sym_Masomenos(m) ; :};
+		{: RESULT = m; :};
 
 Ext_Lista_Masomenos ::= Ext_Sym_Masomenos:m Cup_Term:t
-		{: RESULT = new  AST_Lista_Masomenos(m,t) ; :};
+		{: RESULT = new  AST_Expression_Term_Simple(m,t) ; :};
 Ext_Lista_Masomenos ::= Ext_Sym_Masomenos:m Cup_Term:t Ext_Lista_Masomenos:l
-		{: RESULT = new  AST_Lista_Masomenos(m,t,l) ; :};
+		{: RESULT = new  AST_Expression_Term_Lista(new AST_Expression_Term_Simple(m,t),l) ; :};
+
 
 // Regla 9)
 Cup_Term ::= Cup_Factor:f
-		{: RESULT = new  AST_Term(f) ; :};
+		{: RESULT = new  AST_Term_Simple(f) ; :};
 Cup_Term ::= Cup_Factor:f Ext_Lista_Multidivi:l
-		{: RESULT = new  AST_Term(m,l) ; :};
+		{: RESULT = new  AST_Term_Lista(f,l) ; :};
 
 Ext_Sym_Multidivi ::= Sym_Multiplicacion:m
-		{: RESULT = new  AST_Sym_Multidivi(m) ; :};
+		{: RESULT = m ; :};
 Ext_Sym_Multidivi ::= Sym_Division:d
-		{: RESULT = new  AST_Sym_Multidivi(d) ; :};
+		{: RESULT = d ; :};
 
 Ext_Lista_Multidivi ::= Ext_Sym_Multidivi:m Cup_Factor:f
-		{: RESULT = new  AST_Lista_Multidivi(m,f) ; :};
+		{: RESULT = new  AST_Term_Body_Simple(m,f) ; :};
 Ext_Lista_Multidivi ::= Ext_Sym_Multidivi:m Cup_Factor:f Ext_Lista_Multidivi:l
-		{: RESULT = new  AST_Lista_Multidivi(m,f,l) ; :};
+		{: RESULT = new  AST_Term_Body_Lista(m,f,l) ; :};
 
 // Regla 10)
 
 Cup_Factor ::= Sym_Number:n
-		{: RESULT = new  AST_Factor(n) ; :};
+		{: RESULT = new  AST_Factor_Number(n) ; :};
 Cup_Factor ::= Sym_Name:n
-		{: RESULT = new  AST_Factor(n) ; :};
+		{: RESULT = new  AST_Factor_Name_Simple(n) ; :};
 Cup_Factor ::= Sym_ParenI Cup_Expression:e Sym_ParenF
-		{: RESULT = new  AST_Factor(e) ; :};
+		{: RESULT = new  AST_Factor_Expression(e) ; :};
 
 Cup_Factor ::= Sym_Name:n Sym_ParenI Sym_ParenF
-		{: RESULT = new  AST_Factor(n) ; :};
+		{: RESULT = new  AST_Factor_Name_Expression_Solo(n) ; :};
 Cup_Factor ::= Sym_Name:n Sym_ParenI Cup_Expression:e Sym_ParenF
-		{: RESULT = new  AST_Factor(n,e) ; :};
+		{: RESULT = new  AST_Factor_Name_Expression_Simple(n,e) ; :};
 Cup_Factor ::= Sym_Name:n Sym_ParenI Cup_Expression:e Ext_Lista_Expression:l Sym_ParenF
-		{: RESULT = new  AST_Factor(n,e,l) ; :};
+	{: RESULT = new  AST_Factor_Name_Expression_Lista(n,new lista_expression(e,l)) ; :};
 
 
 Ext_Lista_Expression ::= Sym_Coma Cup_Expression:e
-		{: RESULT = new  AST_Lista_Expression(e) ; :};
-Ext_Lista_Expression ::= Sym_Coma Cup_Expression Ext_Lista_Expression:l
-		{: RESULT = new  AST_Lista_Expression(e,l) ; :};
+		{: RESULT = new lista_expression(e) ; :};
+Ext_Lista_Expression ::= Sym_Coma Cup_Expression:e Ext_Lista_Expression:l
+		{: RESULT = new lista_expression(e,l) ; :};
 
 
 
 // Regla 11)
 Cup_Statement ::=
-		{: RESULT = new  AST_Statement() ; :};
-Cup_Statement ::= Sym_Name:n Sym_DosPIgual Cup_Expression:e {: RESULT = new  AST_Statement(n,e) ; :}
-	| 	Sym_Begin Cup_Statement:s Sym_End {: RESULT = new  AST_Statement(s) ; :}
-	|	Sym_Begin Cup_Statement Ext_Lista_Statement:l Sym_End  {: RESULT = new  AST_Statement(s,l) ; :}
-	|	Sym_If Cup_Condition:c Sym_Then Cup_Statement:s {: RESULT = new  AST_Statement(c,s) ; :}
-	|	Sym_While Cup_Condition:c Sym_Do Cup_Statement:s {: RESULT = new  AST_Statement(c,s) ; :}
-	|	Sym_Return Cup_Expression:e {: RESULT = new  AST_Statement(e) ; :}
-	|	Sym_Write Cup_Expression:e {: RESULT = new  AST_Statement(e) ; :}
+		{: RESULT = new  AST_Statement_Vacio() ; :};
+Cup_Statement ::= Sym_Name:n Sym_DosPIgual Cup_Expression:e {: RESULT = new  AST_Statement_Name(n,e) ; :}
+	| 	Sym_Begin Cup_Statement:s Sym_End {: RESULT = new  AST_Statement_Begin_Simple(s) ; :}
+	|	Sym_Begin Cup_Statement:s Ext_Lista_Statement:l Sym_End  {: RESULT = new  AST_Statement_Begin_Lista(s,l) ; :}
+	|	Sym_If Cup_Condition:c Sym_Then Cup_Statement:s {: RESULT = new  AST_Statement_If(c,s) ; :}
+	|	Sym_While Cup_Condition:c Sym_Do Cup_Statement:s {: RESULT = new  AST_Statement_While(c,s) ; :}
+	|	Sym_Return Cup_Expression:e {: RESULT = new  AST_Statement_Return(e) ; :}
+	|	Sym_Write Cup_Expression:e {: RESULT = new  AST_Statement_Write(e) ; :}
 	;
 
 Ext_Lista_Statement ::= Sym_PuntoYComa Cup_Statement:s
-		 {: RESULT = new  AST_Lista_Statement(s) ; :};
+		 {: RESULT = new  AST_Statement_Begin_Simple(s) ; :};
 Ext_Lista_Statement ::= Sym_PuntoYComa Cup_Statement:s Ext_Lista_Statement:l
-		 {: RESULT = new  AST_Lista_Statement(s,l) ; :};
+		 {: RESULT = new  AST_Statement_Begin_Lista(s,l) ; :};
 
 
 // Regla 12)
 Cup_Condition ::= Sym_Odd Cup_Expression:e
-			 {: RESULT = new  AST_Condition(e) ; :}
+			 {: RESULT = new  AST_Condition_Odd(e) ; :}
 		 | Cup_Expression:e Ext_Sym_Op:o Cup_Expression:e2
-			 {: RESULT = new  AST_Condition(e,o,e2) ; :} ;
+			 {: RESULT = new  AST_Condition_Expression(e,o,e2) ; :} ;
 
-Ext_Sym_Op ::= Sym_Igual:s {: RESULT = new  AST_Sym_Op(s) ; :}
-	 | Sym_Diferente:s {: RESULT = new  AST_Sym_Op(s) ; :}
-	| Sym_Menor:s {: RESULT = new  AST_Sym_Op(s) ; :}
-	 | Sym_MenorIgual:s {: RESULT = new  AST_Sym_Op(s) ; :}
-	 | Sym_Mayor:s {: RESULT = new  AST_Sym_Op(s) ; :}
-	| Sym_MayorIgual:s {: RESULT = new  AST_Sym_Op(s) ; :} ;
+Ext_Sym_Op ::= Sym_Igual:s {: RESULT = s ; :}
+	 | Sym_Diferente:s {: RESULT = s ; :}
+	| Sym_Menor:s {: RESULT = s ; :}
+	 | Sym_MenorIgual:s {: RESULT = s ; :}
+	 | Sym_Mayor:s {: RESULT = s ; :}
+	| Sym_MayorIgual:s {: RESULT = s ; :} ;
 
 
 

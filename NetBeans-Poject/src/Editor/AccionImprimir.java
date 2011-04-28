@@ -19,12 +19,27 @@ public class AccionImprimir extends AbstractAction
 
     public void actionPerformed (ActionEvent e)
    {
+        try
+        {
+
       String texto = areaTexto.getText();
       InputStream stream = new ByteArrayInputStream(texto.getBytes());
-      Sintactico.Arbol.AST arbol = Sintactico.Parser.Parser.main(stream);
+       //= Sintactico.parser.main(stream);
+
+      Sintactico.Scanner sca = new Sintactico.Scanner(stream);
+      Sintactico.parser par = new Sintactico.parser(sca);
+      par.parse();
       
-      Visitor.imprimir_visitor instancia_imp = new Visitor.imprimir_visitor();
-      instancia_imp.imprimir(arbol);
+      //Visitor.imprimir_visitor instancia_imp = new Visitor.imprimir_visitor();
+      //instancia_imp.imprimir(arbol);
+       }
+
+        catch(Exception ex)
+       {
+
+       }
+
+      
 
 
    }

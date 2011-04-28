@@ -11,7 +11,8 @@ package Arbol;
  */
 public class AST_Factor_Name_Expression_Simple extends AST_Factor_Name_Expression {
 
-    public String name;
+    //public String name;
+    public Object name;
 
     public AST_Expression N_Expression;
 
@@ -22,6 +23,13 @@ public class AST_Factor_Name_Expression_Simple extends AST_Factor_Name_Expressio
         this.name = name;
         this.N_Expression = N_Expression;
     }
+
+    public AST_Factor_Name_Expression_Simple(Object name, AST_Expression N_Expression) {
+        this.name = name;
+        this.N_Expression = N_Expression;
+    }
+
+    
 
 
 

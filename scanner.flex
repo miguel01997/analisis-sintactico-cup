@@ -4,26 +4,34 @@
 import java_cup.runtime.*;
 %%
 
+%public
+%implements java_cup.runtime.Scanner
 %class Scanner
+%function next_token
+%type java_cup.runtime.Symbol
 %unicode
 %line
 %column
-%type token
-%function nextToken
 %cup
+%debug
+
+
+
 
 %eofval{
-  return symbol(sym.EOF);
+  return new java_cup.runtime.Symbol(<CUPSYM>.EOF);
 %eofval}
+%eofclose
+
 
 %{
   StringBuffer string = new StringBuffer();
 
-  private token symbol(int type) {
-    return new token(type, yyline, yycolumn);
+  private Symbol symbol(int type) {
+    return new Symbol(type, yyline, yycolumn);
   }
-  private token symbol(int type, Object value) {
-    return new token(type, yyline, yycolumn, value);
+  private Symbol symbol(int type, Object value) {
+    return new Symbol(type, yyline, yycolumn, value);
   }
 %}
 
@@ -86,10 +94,10 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
   /* otros simbolos válidos */
   "("                            { return symbol(sym.Sym_ParenI); }
   ")"                           { return symbol(sym.Sym_ParenF); }
-  ";"                            { return symbol(Sym.Sym_PuntoYComa); }
-  ","                            { return symbol(Sym.Sym_Coma); }
-  ":="                            { return symbol(Sym.Sym_DosPIgual); }
-  "."                            { return symbol(Sym.Sym_Punto); }
+  ";"                            { return symbol(sym.Sym_PuntoYComa); }
+  ","                            { return symbol(sym.Sym_Coma); }
+  ":="                            { return symbol(sym.Sym_DosPIgual); }
+  "."                            { return symbol(sym.Sym_Punto); }
 
 
 

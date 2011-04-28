@@ -11,39 +11,30 @@ package Arbol;
  */
 public class AST_Factor_Name_Expression_Lista extends AST_Factor_Name_Expression {
 
-
-    public String name;
-
-
-    public class lista_expression
-    {
-        public AST_Expression N_Exp = null;
-        public lista_expression sig = null;
-
-        public lista_expression() {
-        }
-
-        public lista_expression(AST_Expression N_Exp) {
-            this.N_Exp = N_Exp;
-        }
-
-        public lista_expression(AST_Expression N_Exp, lista_expression sig) {
-            this.N_Exp = N_Exp;
-            this.sig = sig;
-        }
+    //public String name;
+    public Object name;
+    public lista_expression lista;
 
 
-
-
-
-    }
+ 
 
     public AST_Factor_Name_Expression_Lista() {
     }
 
-    public AST_Factor_Name_Expression_Lista(String name) {
+    public AST_Factor_Name_Expression_Lista(String name, lista_expression lista) {
         this.name = name;
+        this.lista = lista;
     }
+
+    public AST_Factor_Name_Expression_Lista(Object name, lista_expression lista) {
+        this.name = name;
+        this.lista = lista;
+    }
+
+    
+
+
+    
 
 
 

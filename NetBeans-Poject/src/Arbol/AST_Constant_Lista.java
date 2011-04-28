@@ -11,17 +11,21 @@ package Arbol;
  */
 public class AST_Constant_Lista extends AST_Constant{
 
-    public AST_Constant_Lista N_Constant_Lista;
-    public AST_Constant N_Constant_Extra;
+    //public AST_Constant_Simple N_Constant;
+    public AST_Constant_Def N_Constant_Def;
+    public AST_Constant N_Sig;
+    
 
     public AST_Constant_Lista() {
     }
 
-    public AST_Constant_Lista(AST_Constant_Lista N_Constant_Lista, AST_Constant N_Constant_Extra) {
-        this.N_Constant_Lista = N_Constant_Lista;
-        this.N_Constant_Extra = N_Constant_Extra;
+    public AST_Constant_Lista(AST_Constant_Def N_Constant_Def, AST_Constant N_Sig) {
+        this.N_Constant_Def = N_Constant_Def;
+        this.N_Sig = N_Sig;
     }
 
+    
 
+    
 
 }

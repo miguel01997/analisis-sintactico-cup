@@ -206,7 +206,7 @@ public class Editor
 
     private void construyeMenuAnalizar(JMenuBar barraMenu)
     {
-        JMenuItem analizar = new JMenuItem(new AccionAnalizar(areaTexto));
+        JMenuItem analizar = new JMenuItem(new AccionCompilar(areaTexto));
         JMenuItem scannear = new JMenuItem(new AccionScannear(areaTexto));
         JMenuItem parsear = new JMenuItem(new AccionParsear(areaTexto));
         JMenuItem imprimir = new JMenuItem(new AccionImprimir(areaTexto));

@@ -25,9 +25,20 @@ public class AccionParsear extends AbstractAction
 
     public void actionPerformed (ActionEvent e)
    {
+        try
+        {
       String texto = areaTexto.getText();
       InputStream stream = new ByteArrayInputStream(texto.getBytes());
-      Sintactico.Parser.Parser.main(stream);
+      Sintactico.Scanner sca = new Sintactico.Scanner(stream);
+      Sintactico.parser par = new Sintactico.parser(sca);
+      par.parse();
+       }
+
+        catch(Exception ex)
+       {
+            
+       }
+      
    }
 
     public AccionParsear(JTextComponent areaTexto)

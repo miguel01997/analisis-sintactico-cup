@@ -11,18 +11,20 @@ package Arbol;
  */
 public class AST_Declaration_Lista extends AST_Declaration{
 
-    public AST_Declaration_Lista N_Declaration_Lista;
-    public AST_Declaration_Simple N_Declaration_Extra;
+    //public AST_Declaration_Simple N_Declaration;
+    public AST_Declaration N_Declaration;
+    public AST_Declaration N_Sig;
+    
 
     public AST_Declaration_Lista() {
     }
 
-    public AST_Declaration_Lista(AST_Declaration_Lista N_Declaration_Lista, AST_Declaration_Simple N_Declaration_Extra) {
-        this.N_Declaration_Lista = N_Declaration_Lista;
-        this.N_Declaration_Extra = N_Declaration_Extra;
+    public AST_Declaration_Lista(AST_Declaration N_Declaration, AST_Declaration N_Sig) {
+        this.N_Declaration = N_Declaration;
+        this.N_Sig = N_Sig;
     }
 
-
+  
 
 
 

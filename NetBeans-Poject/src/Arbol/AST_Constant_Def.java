@@ -11,8 +11,11 @@ package Arbol;
  */
 public class AST_Constant_Def {
 
-    public String name;
-    public int number;
+    //public String name;
+    //public int number;
+
+    public Object name;
+    public Object number;
 
     public AST_Constant_Def() {
     }
@@ -21,6 +24,13 @@ public class AST_Constant_Def {
         this.name = name;
         this.number = number;
     }
+
+    public AST_Constant_Def(Object name, Object number) {
+        this.name = name;
+        this.number = number;
+    }
+
+    
 
 
 
